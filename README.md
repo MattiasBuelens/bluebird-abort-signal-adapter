@@ -1,0 +1,1 @@
+# bluebird-abort-signal-adapter
