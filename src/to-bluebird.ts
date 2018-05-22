@@ -14,6 +14,7 @@ import {isAbortError} from './utils';
  * @returns {Bluebird<T>}
  */
 export function toBluebird<T>(promise: PromiseLike<T>, signal: AbortSignal): Bluebird<T> {
+    // TODO What if returned Bluebird promise is cancelled externally?
     const onAbort = () => {
         bluebirdPromise.cancel();
     };

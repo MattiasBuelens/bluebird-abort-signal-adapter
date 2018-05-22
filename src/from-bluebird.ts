@@ -29,6 +29,7 @@ export function fromBluebird<T>(bluebirdPromise: Bluebird<T>): PromiseAndAbortCo
             } else if (inspection.isRejected()) {
                 reject(inspection.reason());
             } else if (inspection.isCancelled()) {
+                // TODO Signal abort on controller?
                 reject(createAbortError());
             }
         });
