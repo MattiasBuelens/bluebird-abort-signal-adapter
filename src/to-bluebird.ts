@@ -32,6 +32,10 @@ export function toBluebird<T>(promise: PromiseLike<T>, signal: AbortSignal): Blu
                 }
             });
     });
-    signal.addEventListener('abort', onAbort, {once: true});
+    if (signal.aborted) {
+        onAbort();
+    } else {
+        signal.addEventListener('abort', onAbort, {once: true});
+    }
     return bluebirdPromise;
 }
