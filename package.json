@@ -9,15 +9,15 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "bluebird": "^3.5.1",
-    "typescript": "^2.8.3"
-  },
   "dependencies": {
     "@types/bluebird": "^3.5.20",
     "tslib": "^1.9.1"
   },
   "peerDependencies": {
     "bluebird": "^3"
+  },
+  "devDependencies": {
+    "bluebird": "^3.5.1",
+    "typescript": "^2.8.3"
   }
 }
