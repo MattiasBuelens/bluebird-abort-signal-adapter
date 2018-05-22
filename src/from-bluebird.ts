@@ -2,8 +2,8 @@ import Bluebird from 'bluebird';
 import {createAbortError} from "./utils";
 
 interface PromiseAndAbortController<T> {
-    promise: Promise<T>,
-    controller: AbortController
+    promise: Promise<T>;
+    controller: AbortController;
 }
 
 /**
