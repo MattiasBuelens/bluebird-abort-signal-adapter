@@ -4,6 +4,11 @@ import {inspectPromise, noop, PromiseState} from './test-utils';
 
 describe('fromBluebird', () => {
     let Bluebird: typeof bluebird;
+    const abortErrorLike = {
+        name: 'AbortError',
+        message: 'Aborted'
+    };
+
     beforeAll(() => {
         Bluebird = bluebird.getNewLibraryCopy();
         Bluebird.config({
@@ -38,5 +43,15 @@ describe('fromBluebird', () => {
 
         await expect(promise).rejects.toBe(reason);
         expect(controller.signal.aborted).toBe(false);
+    });
+
+    it('returns a rejected promise and aborted controller when given a cancelled promise', async () => {
+        const input = new Bluebird(noop);
+        input.cancel();
+
+        const {promise, controller} = fromBluebird(input);
+
+        await expect(promise).rejects.toMatchObject(abortErrorLike);
+        expect(controller.signal.aborted).toBe(true);
     });
 });
