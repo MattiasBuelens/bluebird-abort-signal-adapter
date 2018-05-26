@@ -3,21 +3,21 @@ import {fromBluebird} from '../src';
 import {inspectPromise, noop, PromiseState} from './test-utils';
 
 describe('fromBluebird', () => {
-    let Bluebird: typeof bluebird;
+    let BluebirdPromise: typeof bluebird;
     const abortErrorLike = {
         name: 'AbortError',
         message: 'Aborted'
     };
 
     beforeAll(() => {
-        Bluebird = bluebird.getNewLibraryCopy();
-        Bluebird.config({
+        BluebirdPromise = bluebird.getNewLibraryCopy();
+        BluebirdPromise.config({
             cancellation: true
         });
     });
 
     it('returns a pending promise and non-aborted controller when given a pending promise', async () => {
-        const input = new Bluebird(noop);
+        const input = new BluebirdPromise(noop);
 
         const {promise, controller} = fromBluebird(input);
 
@@ -27,7 +27,7 @@ describe('fromBluebird', () => {
 
     it('returns a fulfilled promise and non-aborted controller when given a fulfilled promise', async () => {
         const value = 'yay';
-        const input = Bluebird.resolve(value);
+        const input = BluebirdPromise.resolve(value);
 
         const {promise, controller} = fromBluebird(input);
 
@@ -37,7 +37,7 @@ describe('fromBluebird', () => {
 
     it('returns a rejected promise and non-aborted controller when given a rejected promise', async () => {
         const reason = 'boo';
-        const input = Bluebird.reject(reason);
+        const input = BluebirdPromise.reject(reason);
 
         const {promise, controller} = fromBluebird(input);
 
@@ -46,7 +46,7 @@ describe('fromBluebird', () => {
     });
 
     it('returns a rejected promise and aborted controller when given a cancelled promise', async () => {
-        const input = new Bluebird(noop);
+        const input = new BluebirdPromise(noop);
         input.cancel();
 
         const {promise, controller} = fromBluebird(input);
