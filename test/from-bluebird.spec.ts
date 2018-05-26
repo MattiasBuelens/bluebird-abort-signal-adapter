@@ -21,7 +21,7 @@ describe('fromBluebird', () => {
 
         const {promise, controller} = fromBluebird(input);
 
-        expect(await inspectPromise(promise)).toBe(PromiseState.PENDING);
+        await expect(inspectPromise(promise)).resolves.toBe(PromiseState.PENDING);
         expect(controller.signal.aborted).toBe(false);
     });
 
