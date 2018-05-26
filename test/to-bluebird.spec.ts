@@ -1,5 +1,6 @@
 import bluebird from 'bluebird';
 import {toBluebird} from '../src';
+import {createAbortError} from "../src/utils";
 import {becomesAborted, becomesCancelled, noop} from './test-utils';
 
 describe('toBluebird', () => {
@@ -77,5 +78,15 @@ describe('toBluebird', () => {
 
         expect(bluebirdPromise.isCancelled()).toBe(true);
         await expect(becomesAborted(controller.signal)).resolves.toBe(true);
+    });
+
+    it('cancels Bluebird promise and aborts controller when given a promise rejected with AbortError and non-aborted signal', async () => {
+        const input = Promise.reject(createAbortError());
+        const controller = new AbortController();
+
+        const bluebirdPromise = toBluebird(input, controller, BluebirdPromise);
+
+        await expect(becomesCancelled(bluebirdPromise)).resolves.toBe(true);
+        expect(controller.signal.aborted).toBe(true);
     });
 });

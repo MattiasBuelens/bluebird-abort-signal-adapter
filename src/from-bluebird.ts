@@ -10,8 +10,9 @@ interface PromiseAndAbortController<T> {
  * Converts a cancellable Bluebird promise into a native promise and abort controller.
  *
  * - If the Bluebird promise resolves/rejects, the native promise resolves/rejects.
- * - If the Bluebird promise is cancelled, the native promise rejects with an AbortError.
- * - If the abort controller signals abort, the Bluebird promise cancels.
+ * - If the Bluebird promise is cancelled, the native promise rejects with an AbortError
+ *   and the controller aborts.
+ * - If the returned controller aborts, the Bluebird promise cancels.
  *
  * @param {Bluebird<T>} bluebirdPromise
  * @returns {PromiseAndAbortController<T>}
