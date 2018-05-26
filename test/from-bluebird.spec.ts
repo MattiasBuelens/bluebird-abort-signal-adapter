@@ -8,8 +8,8 @@ describe('fromBluebird', () => {
 
         const {promise, controller} = fromBluebird(input);
 
-        expect(controller.signal.aborted).toBe(false);
         expect(await inspectPromise(promise)).toBe(PromiseState.PENDING);
+        expect(controller.signal.aborted).toBe(false);
     });
 
     it('returns a fulfilled promise and non-aborted controller when given a fulfilled promise', async () => {
@@ -18,8 +18,8 @@ describe('fromBluebird', () => {
 
         const {promise, controller} = fromBluebird(input);
 
-        expect(controller.signal.aborted).toBe(false);
         await expect(promise).resolves.toBe(value);
+        expect(controller.signal.aborted).toBe(false);
     });
 
     it('returns a rejected promise and non-aborted controller when given a rejected promise', async () => {
@@ -28,7 +28,7 @@ describe('fromBluebird', () => {
 
         const {promise, controller} = fromBluebird(input);
 
-        expect(controller.signal.aborted).toBe(false);
         await expect(promise).rejects.toBe(reason);
+        expect(controller.signal.aborted).toBe(false);
     });
 });
