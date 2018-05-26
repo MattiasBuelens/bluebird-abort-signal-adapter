@@ -12,5 +12,5 @@ export function createAbortError(): Error {
 }
 
 export function isAbortError(error: any): error is Error {
-    return error instanceof Error && error.name === 'AbortError';
+    return error && error.name === 'AbortError';
 }
