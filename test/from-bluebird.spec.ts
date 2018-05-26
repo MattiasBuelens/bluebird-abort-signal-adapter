@@ -1,8 +1,16 @@
-import Bluebird from 'bluebird';
+import bluebird from 'bluebird';
 import {fromBluebird} from '../src';
 import {inspectPromise, noop, PromiseState} from './test-utils';
 
 describe('fromBluebird', () => {
+    let Bluebird: typeof bluebird;
+    beforeAll(() => {
+        Bluebird = bluebird.getNewLibraryCopy();
+        Bluebird.config({
+            cancellation: true
+        });
+    });
+
     it('returns a pending promise and non-aborted controller when given a pending promise', async () => {
         const input = new Bluebird(noop);
 
