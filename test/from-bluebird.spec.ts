@@ -54,4 +54,15 @@ describe('fromBluebird', () => {
         await expect(promise).rejects.toMatchObject(abortErrorLike);
         expect(controller.signal.aborted).toBe(true);
     });
+
+    it('cancels the Bluebird promise and rejects the created promise when controller is aborted', async () => {
+        const input = new BluebirdPromise(noop);
+
+        const {promise, controller} = fromBluebird(input);
+        controller.abort();
+
+        expect(input.isCancelled()).toBe(true);
+        expect(controller.signal.aborted).toBe(true);
+        await expect(promise).rejects.toMatchObject(abortErrorLike);
+    });
 });
