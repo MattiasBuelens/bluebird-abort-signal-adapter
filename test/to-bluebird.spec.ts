@@ -12,6 +12,15 @@ describe('toBluebird', () => {
         });
     });
 
+    it('returns a Bluebird promise using the given Bluebird constructor', async () => {
+        const input = new Promise(noop);
+        const controller = new AbortController();
+
+        const bluebirdPromise = toBluebird(input, controller.signal, BluebirdPromise);
+
+        expect(bluebirdPromise).toBeInstanceOf(BluebirdPromise);
+    });
+
     it('returns a pending Bluebird promise when given a pending promise and non-aborted signal', async () => {
         const input = new Promise(noop);
         const controller = new AbortController();
