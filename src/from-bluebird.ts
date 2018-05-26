@@ -19,6 +19,7 @@ interface PromiseAndAbortController<T> {
 export function fromBluebird<T>(bluebirdPromise: Bluebird<T>): PromiseAndAbortController<T> {
     const controller = new AbortController();
     const onAbort = () => {
+        controller.signal.removeEventListener('abort', onAbort);
         bluebirdPromise.cancel();
     };
     const promise = new Promise<T>((resolve, reject) => {
@@ -34,6 +35,6 @@ export function fromBluebird<T>(bluebirdPromise: Bluebird<T>): PromiseAndAbortCo
             }
         });
     });
-    controller.signal.addEventListener('abort', onAbort, {once: true});
+    controller.signal.addEventListener('abort', onAbort);
     return {promise, controller};
 }
