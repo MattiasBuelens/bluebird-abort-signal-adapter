@@ -17,12 +17,16 @@ import {isAbortError} from './utils';
 export function toBluebird<T>(promise: PromiseLike<T>,
                               controller: AbortController,
                               bluebirdConstructor: typeof Bluebird = Bluebird): Bluebird<T> {
-    // TODO What if returned Bluebird promise is cancelled externally?
     const onAbort = () => {
         controller.signal.removeEventListener('abort', onAbort);
         bluebirdPromise.cancel();
     };
-    const bluebirdPromise = new bluebirdConstructor<T>((resolve, reject) => {
+    const bluebirdPromise = new bluebirdConstructor<T>((resolve, reject, onCancel) => {
+        if (onCancel) {
+            onCancel(() => {
+                controller.abort();
+            })
+        }
         promise.then(
             value => {
                 controller.signal.removeEventListener('abort', onAbort);

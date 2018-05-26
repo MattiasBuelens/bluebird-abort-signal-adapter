@@ -24,6 +24,23 @@ export function inspectPromise(promise: PromiseLike<any>): Promise<PromiseState>
         );
 }
 
+function nextEvent(target: EventTarget, type: string): Promise<Event> {
+    return new Promise<Event>(resolve => {
+        target.addEventListener(type, function listener(event) {
+            target.removeEventListener(type, listener);
+            resolve(event);
+        });
+    })
+}
+
 export function becomesCancelled(bluebirdPromise: Bluebird<any>): Promise<boolean> {
     return bluebirdPromise.reflect().then(inspection => inspection.isCancelled());
+}
+
+export function becomesAborted(signal: AbortSignal): Promise<boolean> {
+    if (signal.aborted) {
+        return Promise.resolve(true);
+    } else {
+        return nextEvent(signal, 'abort').then(() => true);
+    }
 }
