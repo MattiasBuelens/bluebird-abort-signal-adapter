@@ -9,17 +9,20 @@ import {isAbortError} from './utils';
  * - If the native promise rejects with another reason, the Bluebird promise rejects.
  * - If the abort signal is aborted, the Bluebird promise cancels.
  *
- * @param {PromiseLike<T>} promise
- * @param {AbortSignal} signal
+ * @param promise
+ * @param signal
+ * @param [bluebirdConstructor]
  * @returns {Bluebird<T>}
  */
-export function toBluebird<T>(promise: PromiseLike<T>, signal: AbortSignal): Bluebird<T> {
+export function toBluebird<T>(promise: PromiseLike<T>,
+                              signal: AbortSignal,
+                              bluebirdConstructor: typeof Bluebird = Bluebird): Bluebird<T> {
     // TODO What if returned Bluebird promise is cancelled externally?
     const onAbort = () => {
         signal.removeEventListener('abort', onAbort);
         bluebirdPromise.cancel();
     };
-    const bluebirdPromise = new Bluebird<T>((resolve, reject) => {
+    const bluebirdPromise = new bluebirdConstructor<T>((resolve, reject) => {
         promise.then(
             value => {
                 signal.removeEventListener('abort', onAbort);
