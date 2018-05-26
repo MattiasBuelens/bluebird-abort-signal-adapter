@@ -1,3 +1,5 @@
+import Bluebird = require("bluebird");
+
 export function noop() {
     return;
 }
@@ -20,4 +22,8 @@ export function inspectPromise(promise: PromiseLike<any>): Promise<PromiseState>
             value => (value === sentinel) ? PromiseState.PENDING : PromiseState.FULFILLED,
             () => PromiseState.REJECTED
         );
+}
+
+export function becomesCancelled(bluebirdPromise: Bluebird<any>): Promise<boolean> {
+    return bluebirdPromise.reflect().then(inspection => inspection.isCancelled());
 }

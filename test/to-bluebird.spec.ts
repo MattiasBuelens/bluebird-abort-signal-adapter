@@ -1,9 +1,13 @@
 import bluebird from 'bluebird';
 import {toBluebird} from '../src';
-import {noop} from './test-utils';
+import {becomesCancelled, noop} from './test-utils';
 
 describe('toBluebird', () => {
     let BluebirdPromise: typeof bluebird;
+    const abortErrorLike = {
+        name: 'AbortError',
+        message: 'Aborted'
+    };
 
     beforeAll(() => {
         BluebirdPromise = bluebird.getNewLibraryCopy();
@@ -48,5 +52,15 @@ describe('toBluebird', () => {
         const bluebirdPromise = toBluebird(input, controller.signal, BluebirdPromise);
 
         await expect(bluebirdPromise).rejects.toBe(reason);
+    });
+
+    it('returns a cancelled Bluebird promise when given a pending promise and aborted signal', async () => {
+        const input = new Promise(noop);
+        const controller = new AbortController();
+        controller.abort();
+
+        const bluebirdPromise = toBluebird(input, controller.signal, BluebirdPromise);
+
+        await expect(becomesCancelled(bluebirdPromise)).resolves.toBe(true);
     });
 });
