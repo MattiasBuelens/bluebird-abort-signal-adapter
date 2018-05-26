@@ -13,8 +13,8 @@ import {isAbortError} from './utils';
  *
  * @param promise
  * @param controller
- * @param [bluebirdConstructor]
- * @returns {Bluebird<T>}
+ * @param [bluebirdConstructor] The Bluebird promise constructor to use, defaults to the default constructor.
+ * @returns A Bluebird promise.
  */
 export function toBluebird<T>(promise: PromiseLike<T>,
                               controller: AbortController,

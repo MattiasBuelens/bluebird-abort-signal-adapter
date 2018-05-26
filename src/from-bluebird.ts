@@ -14,8 +14,8 @@ interface PromiseAndAbortController<T> {
  *   and the controller aborts.
  * - If the returned controller aborts, the Bluebird promise cancels.
  *
- * @param {Bluebird<T>} bluebirdPromise
- * @returns {PromiseAndAbortController<T>}
+ * @param bluebirdPromise
+ * @returns A native promise and abort controller.
  */
 export function fromBluebird<T>(bluebirdPromise: Bluebird<T>): PromiseAndAbortController<T> {
     const controller = new AbortController();
