@@ -20,7 +20,7 @@ describe('toBluebird', () => {
         const input = new Promise(noop);
         const controller = new AbortController();
 
-        const bluebirdPromise = toBluebird(input, controller.signal, BluebirdPromise);
+        const bluebirdPromise = toBluebird(input, controller, BluebirdPromise);
 
         expect(bluebirdPromise).toBeInstanceOf(BluebirdPromise);
     });
@@ -29,7 +29,7 @@ describe('toBluebird', () => {
         const input = new Promise(noop);
         const controller = new AbortController();
 
-        const bluebirdPromise = toBluebird(input, controller.signal, BluebirdPromise);
+        const bluebirdPromise = toBluebird(input, controller, BluebirdPromise);
 
         expect(bluebirdPromise.isPending()).toBe(true);
     });
@@ -39,7 +39,7 @@ describe('toBluebird', () => {
         const input = Promise.resolve(value);
         const controller = new AbortController();
 
-        const bluebirdPromise = toBluebird(input, controller.signal, BluebirdPromise);
+        const bluebirdPromise = toBluebird(input, controller, BluebirdPromise);
 
         await expect(bluebirdPromise).resolves.toBe(value);
     });
@@ -49,7 +49,7 @@ describe('toBluebird', () => {
         const input = Promise.reject(reason);
         const controller = new AbortController();
 
-        const bluebirdPromise = toBluebird(input, controller.signal, BluebirdPromise);
+        const bluebirdPromise = toBluebird(input, controller, BluebirdPromise);
 
         await expect(bluebirdPromise).rejects.toBe(reason);
     });
@@ -59,7 +59,7 @@ describe('toBluebird', () => {
         const controller = new AbortController();
         controller.abort();
 
-        const bluebirdPromise = toBluebird(input, controller.signal, BluebirdPromise);
+        const bluebirdPromise = toBluebird(input, controller, BluebirdPromise);
 
         await expect(becomesCancelled(bluebirdPromise)).resolves.toBe(true);
     });
