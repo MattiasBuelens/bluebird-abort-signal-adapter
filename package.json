@@ -25,9 +25,7 @@
     "typescript": "^3.3.3"
   },
   "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
+    "preset": "ts-jest",
     "testRegex": "(\\.|/)(test|spec)\\.(js|ts)$",
     "moduleFileExtensions": [
       "ts",
