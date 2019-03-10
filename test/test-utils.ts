@@ -33,7 +33,7 @@ function nextEvent(target: EventTarget, type: string): Promise<Event> {
     })
 }
 
-export function becomesCancelled(bluebirdPromise: Bluebird<any>): Promise<boolean> {
+export function becomesCancelled(bluebirdPromise: Bluebird<any>): Bluebird<boolean> {
     return bluebirdPromise.reflect().then(inspection => inspection.isCancelled());
 }
 

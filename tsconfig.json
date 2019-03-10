@@ -9,8 +9,6 @@
     ],
     "strict": true,
     "esModuleInterop": true,
-    "importHelpers": true,
-    "rootDir": "src",
-    "outDir": "dist"
+    "importHelpers": true
   }
 }
