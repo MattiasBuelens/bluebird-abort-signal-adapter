@@ -18,11 +18,11 @@
     "bluebird": "^3"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.13",
-    "bluebird": "^3.5.5",
-    "jest": "^24.8.0",
-    "ts-jest": "^24.0.2",
-    "typescript": "^3.5.1"
+    "@types/jest": "^24.0.18",
+    "bluebird": "^3.7.0",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.6.3"
   },
   "jest": {
     "preset": "ts-jest",
