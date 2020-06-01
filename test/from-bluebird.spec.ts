@@ -1,3 +1,4 @@
+import {beforeAll, describe, expect, it} from "@jest/globals";
 import bluebird from 'bluebird';
 import {fromBluebird} from '../src';
 import {inspectPromise, noop, PromiseState} from './test-utils';

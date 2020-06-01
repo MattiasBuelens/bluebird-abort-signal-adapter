@@ -1,3 +1,4 @@
+import {beforeAll, describe, expect, it} from "@jest/globals";
 import bluebird from 'bluebird';
 import {toBluebird} from '../src';
 import {createAbortError} from "../src/utils";
