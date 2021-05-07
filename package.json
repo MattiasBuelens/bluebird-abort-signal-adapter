@@ -11,18 +11,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/bluebird": "^3.5.32",
-    "tslib": "^2.0.0"
+    "@types/bluebird": "^3.5.34",
+    "tslib": "^2.2.0"
   },
   "peerDependencies": {
     "bluebird": "^3"
   },
   "devDependencies": {
-    "@jest/globals": "^26.0.1",
+    "@jest/globals": "^26.6.2",
     "bluebird": "^3.7.2",
-    "jest": "^26.0.1",
-    "ts-jest": "^26.1.0",
-    "typescript": "^3.9.3"
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.6",
+    "typescript": "^4.2.4"
   },
   "jest": {
     "preset": "ts-jest",
